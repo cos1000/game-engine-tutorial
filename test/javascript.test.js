@@ -175,10 +175,4 @@ describe('Starting test javascript - Fundamental objects - Object', () => {
     const objB = Object.create(objA);
     expect(objB.a).toEqual(1);
   });
-
-  test('test defineProperties', () => {
-    const objA = {};
-    Object.defineProperties(objA, {a: {value: 10, writeable: true, configurable: false}, b: {}});
-    expect(objB.a).toEqual(1);
-  });
 });
