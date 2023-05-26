@@ -175,4 +175,211 @@ describe('Starting test javascript - Fundamental objects - Object', () => {
     const objB = Object.create(objA);
     expect(objB.a).toEqual(1);
   });
+
+  test('test defineProperties', () => {
+    const objA = {};
+    Object.defineProperties(objA, {
+      a: {
+        value: 10,
+        writable: true,
+        configurable: false,
+      },
+      b: {},
+    });
+    expect(objA.a).toEqual(10);
+  });
+
+  test('test defineProperty', () => {
+    const objA = {};
+    Object.defineProperty(objA, 'a', {
+      value: 11,
+      writable: true,
+      configurable: false,
+    });
+    expect(objA.a).toEqual(11);
+  });
+
+  test('test entries', () => {
+    const objA = {a: 1, b: 2};
+    let objB = '';
+    let result = 0;
+    for (const [key, value] of Object.entries(objA)) {
+      objB = key;
+      result += value;
+    }
+    expect(result).toEqual(3);
+    expect(objB).toEqual('b');
+  });
+
+  test('test freeze', () => {
+    const objA = {a: 1, b: 2};
+    Object.freeze(objA);
+    objA.a = 10;
+    expect(objA.a).toEqual(1);
+  });
+
+  test('test fromEntries', () => {
+    const objA = new Map([
+      ['a', 1],
+      ['b', 2],
+    ]);
+    const objB = Object.fromEntries(objA);
+    expect(objB.a).toEqual(1);
+  });
+
+  test('test getOwnPropertyDescriptor', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.getOwnPropertyDescriptor(objA, 'a');
+    expect(objB.value).toEqual(1);
+  });
+
+  test('test getOwnPropertyDescriptors', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.getOwnPropertyDescriptors(objA);
+    expect(objB.a.value).toEqual(1);
+  });
+
+  test('test getOwnPropertyNames', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.getOwnPropertyNames(objA);
+    expect(objB).toEqual(['a', 'b']);
+  });
+
+  test('test getOwnPropertySymbols', () => {
+    const object1 = {};
+    const a = Symbol('a');
+    const b = Symbol.for('b');
+
+    object1[a] = 'localSymbol';
+    object1[b] = 'globalSymbol';
+
+    const objectSymbols = Object.getOwnPropertySymbols(object1);
+    expect(objectSymbols.length).toEqual(2);
+  });
+
+  test('test getPrototypeOf', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.create(objA);
+    expect(Object.getPrototypeOf(objB)).toEqual(objA);
+  });
+
+  test('test hasOwn', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.hasOwn(objA, 'a')).toBeTruthy();
+  });
+
+  test('test hasOwnProperty', () => {
+    const objA = {a: 1, b: 2};
+    expect(objA.hasOwnProperty('a')).toBeTruthy();
+  });
+
+  test('test is', () => {
+    expect(Object.is('1', 1)).toBeFalsy();
+  });
+
+  test('test isExtensible', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.isExtensible(objA)).toBeTruthy();
+    Object.preventExtensions(objA);
+    expect(Object.isExtensible(objA)).toBeFalsy();
+  });
+
+  test('test isFrozen', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.isFrozen(objA)).toBeFalsy();
+    Object.freeze(objA);
+    expect(Object.isFrozen(objA)).toBeTruthy();
+  });
+
+  test('test isPrototypeOf', () => {
+    /**
+     * Testing function A
+     */
+    function FnA() {};
+
+    /**
+     * Testing function B
+     */
+    function FnB() {};
+
+    FnB.prototype = Object.create(FnA.prototype);
+    const fnC = new FnB();
+    expect(FnA.prototype.isPrototypeOf(fnC)).toBeTruthy();
+  });
+
+  test('test isSealed', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.isSealed(objA)).toBeFalsy();
+    Object.seal(objA);
+    expect(Object.isSealed(objA)).toBeTruthy();
+  });
+
+  test('test keys', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.keys(objA);
+    expect(objB).toEqual(['a', 'b']);
+  });
+
+  test('test preventExtensions', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.isExtensible(objA)).toBeTruthy();
+    Object.preventExtensions(objA);
+    expect(Object.isExtensible(objA)).toBeFalsy();
+  });
+
+  test('test propertyIsEnumerable', () => {
+    const objA = {a: 1, b: 2};
+    const arrB = [11];
+    expect(objA.propertyIsEnumerable('a')).toBeTruthy();
+    expect(arrB.propertyIsEnumerable('0')).toBeTruthy();
+    expect(arrB.propertyIsEnumerable('length')).toBeFalsy();
+  });
+
+  test('test seal', () => {
+    const objA = {a: 1, b: 2};
+    expect(Object.isSealed(objA)).toBeFalsy();
+    Object.seal(objA);
+    expect(Object.isSealed(objA)).toBeTruthy();
+  });
+
+  test('test toLocaleString', () => {
+    const result = 123456.789;
+    expect(result.toLocaleString('de-DE')).toEqual('123.456,789');
+  });
+
+  test('test toString', () => {
+    /**
+     * Testing function A
+     * @param {number} value - Setting Value
+     */
+    function FnA(value) {
+      this.value = value;
+    }
+    const fnA = new FnA(13);
+    FnA.prototype.toString = function fnAToString() {
+      return `${this.value}`;
+    };
+    expect(fnA.toString()).toEqual('13');
+  });
+
+  test('test valueOf', () => {
+    /**
+     * Testing function A
+     * @param {number} value - Setting Value
+     */
+    function FnA(value) {
+      this.value = value;
+    }
+    const fnA = new FnA(14);
+    FnA.prototype.valueOf = function() {
+      return this.value;
+    };
+    expect(fnA + 1).toEqual(15);
+  });
+
+  test('test values', () => {
+    const objA = {a: 1, b: 2};
+    const objB = Object.values(objA);
+    expect(objB).toEqual([1, 2]);
+  });
 });

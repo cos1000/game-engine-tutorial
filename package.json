@@ -1,6 +1,6 @@
 {
     "name": "game-engine-tutorial",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Testing and get start to development game on Nodejs. ",
     "main": "app.js",
     "scripts": {
