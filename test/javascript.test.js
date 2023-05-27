@@ -383,3 +383,100 @@ describe('Starting test javascript - Fundamental objects - Object', () => {
     expect(objB).toEqual([1, 2]);
   });
 });
+
+describe('Starting test javascript - Fundamental objects - Function', () => {
+  beforeEach(() => {
+    // Run at each test before.
+  });
+
+  afterEach(() => {
+    // Run at each test after.
+  });
+
+  test('test hasInstance', () => {
+    /**
+     * This is testing class.
+     */
+    class ClsA {};
+    const clsA = new ClsA();
+    expect(clsA instanceof ClsA).toEqual(ClsA[Symbol.hasInstance](clsA));
+  });
+
+  test('test apply', () => {
+    const numbers = [5, 6, 2, 3, 7];
+    const result = Math.max.apply(null, numbers);
+    expect(result).toEqual(7);
+  });
+
+  test('test bind', () => {
+    const objA = {
+      a: 1,
+      fn: function() {
+        return this.a;
+      },
+    };
+    const fnA = objA.fn;
+    const fnB = fnA.bind(objA);
+    expect(fnB()).toEqual(1);
+  });
+
+  test('test call', () => {
+    /**
+     * This is testing function A
+     * @param {*} a Testing Field
+     * @param {*} b Testing Field
+     */
+    function FnA(a, b) {
+      this.a = a;
+      this.b = b;
+    }
+    /**
+     * This is testing function B
+     * @param {*} a Testing Field
+     * @param {*} b Testing Field
+     */
+    function FnB(a, b) {
+      FnA.call(this, a, b);
+      this.c = 3;
+    }
+    expect(new FnB(1, 2).a).toEqual(1);
+  });
+
+  test('test displayName', () => {
+    const objA = {
+      a: 1,
+      fn: function fn(a) {
+        this.a = a;
+        fn.displayName = `fn (${a})`;
+        return this.a;
+      },
+    };
+    expect(objA.fn.displayName).toEqual(undefined);
+    objA.fn(2);
+    expect(objA.fn.displayName).toEqual('fn (2)');
+  });
+
+  test('test length', () => {
+    const objA = {
+      a: 1,
+      fn: function fn(a) {
+        this.a = a;
+        fn.displayName = `fn (${a})`;
+        return this.a;
+      },
+    };
+    expect(objA.fn.length).toEqual(1);
+  });
+
+  test('test name', () => {
+    const objA = {
+      a: 1,
+      fn: function fn(a) {
+        this.a = a;
+        fn.displayName = `fn (${a})`;
+        return this.a;
+      },
+    };
+    expect(objA.fn.name).toEqual('fn');
+  });
+});
