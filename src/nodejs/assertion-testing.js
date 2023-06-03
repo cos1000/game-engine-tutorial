@@ -3,7 +3,7 @@ const assert = require('node:assert');
 assert.deepEqual([[[1, 2, 3]], 4, 5], [[[1, 2, 3]], 4, 5]);
 
 // Generate an AssertionError to compare the error message later:
-const { message } = new assert.AssertionError({
+const {message} = new assert.AssertionError({
   actual: 1,
   expected: 2,
   operator: 'strictEqual',
@@ -15,45 +15,44 @@ try {
   assert.doesNotMatch('I will fail', /fail/);
   (async () => {
     await assert.doesNotReject(
-      async () => {
-        throw new TypeError('Wrong value');
-      },
-      SyntaxError,
+        async () => {
+          throw new TypeError('Wrong value');
+        },
+        SyntaxError,
     );
   })();
   assert.doesNotThrow(
-    () => {
-      throw new TypeError('Wrong value');
-    },
-    SyntaxError,
+      () => {
+        throw new TypeError('Wrong value');
+      },
+      SyntaxError,
   );
   assert.equal(1, 1);
   assert.fail('boom');
   assert.ifError(null);
   assert.match('I will pass', /pass/);
-  assert.notDeepStrictEqual({ a: 1 }, { a: '1' });
+  assert.notDeepStrictEqual({a: 1}, {a: '1'});
   assert.notEqual(1, 2);
   assert.notStrictEqual(1, 2);
   assert.ok(true);
   (async () => {
     await assert.rejects(
-      async () => {
-        throw new TypeError('Wrong value');
-      },
-      {
-        name: 'TypeError',
-        message: 'Wrong value',
-      },
+        async () => {
+          throw new TypeError('Wrong value');
+        },
+        {
+          name: 'TypeError',
+          message: 'Wrong value',
+        },
     );
   })();
   assert.strictEqual(1, 1);
   assert.throws(
-    () => {
-      throw new Error('Wrong value');
-    },
-    /^Error: Wrong value$/,
+      () => {
+        throw new Error('Wrong value');
+      },
+      /^Error: Wrong value$/,
   );
-  
 } catch (err) {
   assert(err instanceof assert.AssertionError);
   assert.strictEqual(err.message, message);
@@ -66,5 +65,9 @@ try {
 }
 
 const tracker = new assert.CallTracker();
+/**
+ * This is the testing func
+ */
 function func() {}
 const callsfunc = tracker.calls(func, 1);
+callsfunc();

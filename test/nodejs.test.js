@@ -1,24 +1,24 @@
 // const javascriptTesting = require('../src/javascript-testing');
 
 beforeAll(() => {
-    // Run at test Suite before.
+  // Run at test Suite before.
+});
+
+afterAll(() => {
+  // Run at test Suite after;
+});
+
+describe('Starting test javascript - Value properties', () => {
+  beforeEach(() => {
+    // Run at each test before.
   });
-  
-  afterAll(() => {
-    // Run at test Suite after;
+
+  afterEach(() => {
+    // Run at each test after.
   });
-  
-  describe('Starting test javascript - Value properties', () => {
-    beforeEach(() => {
-      // Run at each test before.
-    });
-  
-    afterEach(() => {
-      // Run at each test after.
-    });
-  
-    test('test globalThis', () => {
-      const result = (typeof globalThis.XMLHttpRequest === 'function');
-      expect(result).toBeFalsy();
-    });
+
+  test('test globalThis', () => {
+    const result = (typeof globalThis.XMLHttpRequest === 'function');
+    expect(result).toBeFalsy();
+  });
 });
