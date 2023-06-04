@@ -384,7 +384,7 @@ describe('Starting test javascript - Fundamental objects - Object', () => {
   });
 });
 
-describe('Starting test javascript - Fundamental objects - Function', () => {
+describe('Starting test javascript - Fundamental objects - Object', () => {
   beforeEach(() => {
     // Run at each test before.
   });
@@ -478,5 +478,106 @@ describe('Starting test javascript - Fundamental objects - Function', () => {
       },
     };
     expect(objA.fn.name).toEqual('fn');
+  });
+});
+
+describe('Starting test javascript - Fundamental objects - Boolean', () => {
+  beforeEach(() => {
+    // Run at each test before.
+  });
+
+  afterEach(() => {
+    // Run at each test after.
+  });
+
+  test('test toString', () => {
+    const result = true;
+    expect(result.toString()).toEqual('true');
+  });
+
+  test('test valueOf', () => {
+    const result = true;
+    expect(result.valueOf()).toBeTruthy();
+  });
+});
+
+describe('Starting test javascript - Fundamental objects - Symbol', () => {
+  beforeEach(() => {
+    // Run at each test before.
+  });
+
+  afterEach(() => {
+    // Run at each test after.
+  });
+
+  test('test Equal', () => {
+    const sym1 = Symbol('foo');
+    const sym2 = Symbol('foo');
+    expect(sym1===sym2).toBeFalsy();
+  });
+
+  test('test for..in', () => {
+    const obj = {};
+
+    obj[Symbol('a')] = 'a';
+    obj[Symbol.for('b')] = 'b';
+    obj['c'] = 'c';
+    obj.d = 'd';
+
+    let result = '';
+    for (const i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        result += i.toString();
+      }
+    }
+
+    expect(result).toEqual('cd');
+  });
+
+  test('test toPrimitive', () => {
+    const sym = Symbol('example');
+    expect(sym === sym[Symbol.toPrimitive]()).toBeTruthy();
+  });
+
+  test('test toPrimitive', () => {
+    let result = '';
+    const delayedResponses = {
+      delays: [500, 1300, 3500],
+
+      wait(delay) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, delay);
+        });
+      },
+
+      async* [Symbol.asyncIterator]() {
+        for (const delay of this.delays) {
+          await this.wait(delay);
+          yield `${delay} `;
+        }
+      },
+    };
+
+    (async () => {
+      for await (const response of delayedResponses) {
+        result += response;
+      }
+      expect(result).toEqual('500 1300 3500 ');
+    })();
+  });
+
+  test('test description', () => {
+    const result = Symbol.for('foo').description;
+    expect(result).toEqual('foo');
+  });
+
+  test('test toString', () => {
+    const result = Symbol.for('foo').toString();
+    expect(result).toEqual('Symbol(foo)');
+  });
+
+  test('test for', () => {
+    const result = Symbol.for('foo');
+    expect(result.toString()).toEqual('Symbol(foo)');
   });
 });
